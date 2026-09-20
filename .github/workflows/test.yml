@@ -2,45 +2,42 @@ name: POS Backend CI Test Runner
 
 on:
   push:
-    branches: [ main, master, dev ]
+    branches:
+      - main
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   run-tests:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository Code
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Set up Python 3.10 Environment
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+          cache: "pip"
+          cache-dependency-path: "requirements.txt"
 
-    - name: Install Application Dependencies
-      defaults:
-        run:
-          working-directory: backend/projects/pos
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install fastapi uvicorn sqlalchemy pydantic python-multipart passlib bcrypt python-jose[cryptography] httpx pytest pytest-asyncio
-        
-        if [ -f requirements.txt ]; then 
-          python -m pip install -r requirements.txt
-        elif [ -f ../requirements.txt ]; then 
-          python -m pip install -r ../requirements.txt
-        elif [ -f ../../../requirements.txt ]; then 
-          python -m pip install -r ../../../requirements.txt
-        fi
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fastapi uvicorn sqlalchemy pydantic python-multipart passlib bcrypt python-jose[cryptography] httpx pytest pytest-asyncio
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Execute Complete Test Suite with Pytest
-      defaults:
-        run:
-          working-directory: backend/projects/pos
-      env:
-        DATABASE_URL: "sqlite:///:memory:" 
-        PYTHONPATH: .
-      run: |
-        python -m pytest -v
+      - name: Run automated test suite
+        env:
+          DATABASE_URL: "sqlite:///:memory:"
+          PYTHONPATH: .
+        run: |
+          python -m pytest -v
