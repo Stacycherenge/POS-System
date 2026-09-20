@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from database import Base, engine
-from app.routers import product,sale,sale_item,customer,user,receipt,payment,supplier,category
-import app.models
+from routers import product,sale,sale_item,customer,user,receipt,payment,supplier,category,auth
+import models
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="POS API", version="1.0.0")
+
+@app.get ("/")
+def read_root():
+    return {"message": "Welcome to the POS API"}
 
 app.include_router(user.router)
 app.include_router(supplier.router)
@@ -16,3 +20,4 @@ app.include_router(sale.router)
 app.include_router(sale_item.router)
 app.include_router(payment.router)
 app.include_router(receipt.router)
+app.include_router(auth.router)

@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.sale import Sale
+from models.sale import Sale
 
 class SaleRepository:
     def __init__(self):

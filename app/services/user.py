@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Session
-from app.repositories.user import user_repository
+from repositories.user import user_repository
 from fastapi import HTTPException, status
-from app.schemas.user import UserCreate, UserUpdate
+from schemas.user import UserCreate, UserUpdate
 
 
-def get_user(db: Session, id: str):
+def get_user(db: Session, id: int):
     user = user_repository.get(db, id)
     if not user:
         raise HTTPException(
@@ -17,14 +17,26 @@ def list_users(db: Session):
 
 
 def create_user(db: Session, data: UserCreate):
-    return user_repository.create(db, data.model_dump())
+    user_data = data.model_dump()
+    
+    plain_password = user_data.pop("password")
+    
+    user_data["password_hash"] = plain_password + "_hashed" 
+    
+    return user_repository.create(db, user_data)
 
 
-def update_user(db: Session, user_id: str, data: UserUpdate):
+def update_user(db: Session, user_id: int, data: UserUpdate):
     user = get_user(db, user_id)
-    return user_repository.update(db, user, data.model_dump(exclude_unset=True))
+    
+    update_data = data.model_dump(exclude_unset=True)
+    if "password" in update_data:
+        plain_password = update_data.pop("password")
+        update_data["password_hash"] = plain_password + "_hashed" 
+        
+    return user_repository.update(db, user, update_data)
 
 
-def delete_user(db: Session, user_id: str):
-    user = user_repository.get(db, user_id)
+def delete_user(db: Session, user_id: int):
+    user = get_user(db, user_id) 
     return user_repository.delete(db, user)

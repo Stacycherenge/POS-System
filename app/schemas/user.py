@@ -1,20 +1,20 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 class UserBase(BaseModel):
     username: str
+    email: str  
     first_name: str
     last_name: str
     role: str 
     is_active: bool = True
 
 class UserCreate(UserBase):
-    user_id: str
-    password_hash: str
+    password: str  
 
 class UserUpdate(BaseModel):
     username: str | None = None
-    password_hash: str | None = None
+    password: str | None = None
     first_name: str | None = None
     last_name: str | None = None
     role: str | None = None
@@ -22,5 +22,5 @@ class UserUpdate(BaseModel):
 
 class UserRead(UserBase):
     model_config = ConfigDict(from_attributes=True)
-    user_id: str
+    user_id: int
     created_at: datetime

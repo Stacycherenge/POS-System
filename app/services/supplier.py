@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from app.repositories.supplier import supplier_repository
+from repositories.supplier import supplier_repository
 from fastapi import HTTPException, status
-from app.schemas.supplier import SupplierCreate, SupplierUpdate
+from schemas.supplier import SupplierCreate, SupplierUpdate
 
 
 def get_supplier(db: Session, id: int):

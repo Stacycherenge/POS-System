@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from app.repositories.receipt import receipt_repository
+from repositories.receipt import receipt_repository
 from fastapi import HTTPException, status
-from app.schemas.receipt import ReceiptCreate, ReceiptUpdate
+from schemas.receipt import ReceiptCreate, ReceiptUpdate
 
 
 def get_receipt(db: Session, id: str):

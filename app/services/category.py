@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from app.repositories.category import category_repository
+from repositories.category import category_repository
 from fastapi import HTTPException, status
-from app.schemas.category import CategoryCreate, CategoryUpdate
+from schemas.category import CategoryCreate, CategoryUpdate
 
 
 def get_category(db: Session, id: str):

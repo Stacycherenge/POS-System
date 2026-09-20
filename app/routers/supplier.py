@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
 from database import get_db
-from app.schemas.supplier import SupplierCreate, SupplierRead, SupplierUpdate
-from app.services import supplier
+from schemas.supplier import SupplierCreate, SupplierRead, SupplierUpdate
+from services import supplier as supplier_service
 
 router = APIRouter(prefix="/suppliers", tags=["Suppliers"])
 

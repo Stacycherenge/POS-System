@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
-from app.repositories.payment import payment_repository
+from repositories.payment import payment_repository
 from fastapi import HTTPException, status
-from app.schemas.payment import PaymentCreate, PaymentUpdate
+from schemas.payment import PaymentCreate, PaymentUpdate
 
 
 def get_payment(db: Session, id: str):

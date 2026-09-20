@@ -9,13 +9,13 @@ class ProductBase(BaseModel):
     stock_quantity: int
     expiry_date: str
     is_prescription_required: bool = False
-    product_form: str  # tablet, syrup, capsule
-    category_id: str
+    product_form: str  
+    category_id: int
     supplier_id: int
     is_active: bool = True
 
 class ProductCreate(ProductBase):
-    product_id: str
+    product_id: int
 
 class ProductUpdate(BaseModel):
     name: str | None = None
@@ -25,11 +25,11 @@ class ProductUpdate(BaseModel):
     expiry_date: str | None = None
     is_prescription_required: bool | None = None
     product_form: str | None = None
-    category_id: str | None = None
+    category_id: int | None = None
     supplier_id: int | None = None
     is_active: bool | None = None
 
 class ProductRead(ProductBase):
     model_config = ConfigDict(from_attributes=True)
-    product_id: str
+    product_id: int
     created_at: datetime

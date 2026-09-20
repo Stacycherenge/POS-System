@@ -2,7 +2,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 class CustomerBase(BaseModel):
-    user_id: str
+    user_id: int
     first_name: str
     last_name: str
     phone_number: str
@@ -10,10 +10,10 @@ class CustomerBase(BaseModel):
     is_active: bool = True
 
 class CustomerCreate(CustomerBase):
-    customer_id: str
+    customer_id: int
 
 class CustomerUpdate(BaseModel):
-    user_id: str | None = None
+    user_id: int | None = None
     first_name: str | None = None
     last_name: str | None = None
     phone_number: str | None = None
@@ -22,5 +22,5 @@ class CustomerUpdate(BaseModel):
 
 class CustomerRead(CustomerBase):
     model_config = ConfigDict(from_attributes=True)
-    customer_id: str
+    customer_id: int
     created_at: datetime

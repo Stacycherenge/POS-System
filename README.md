@@ -54,11 +54,9 @@ The project follows a standard layered architecture:
 git clone https://github.com
 cd pharmacy-pos-backend
 
-# Set up and activate virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows use: venv\Scripts\activate
+source venv/bin/activate  
 
-# Install dependencies
 pip install fastapi uvicorn sqlalchemy pydantic
 ```
 
@@ -91,3 +89,22 @@ When the local server is running, you can explore, test, and view the raw payloa
 | **Sale Items** | `/sale-items` | `GET`, `POST`, `PUT`, `DELETE` |
 | **Payments** | `/payments`  `GET`, `POST`, `PUT`, `DELETE` |
 | **Receipts** | `/receipts` `GET`, `POST`, `PUT`, `DELETE` |
+
+## Running the Automated Test Suite Local Environment
+
+This backend application uses `pytest` and an isolated, in-memory `SQLite` database context to guarantee your development tables remain completely safe and un-altered.
+
+### Prerequisites & Execution
+
+1. Activate your Python environment configuration setup:
+   ```bash
+   source env/bin/activate  
+   ```
+
+2. Run the complete validation command matrix:
+   ```bash
+   pytest -v
+   ```
+
+### Continuous Integration
+GitHub Actions automatically runs this comprehensive test suite on every code push or open Pull Request. It will block merges if any unit test fails.

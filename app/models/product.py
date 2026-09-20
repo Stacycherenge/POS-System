@@ -15,7 +15,7 @@ class Product(Base):
     stock_quantity = Column(Integer, nullable=False)
     expiry_date = Column(String, nullable=False) 
     is_prescription_required = Column(Boolean, nullable=False, default=False)
-    product_form = Column(String, nullable=False)  # tablet, syrup, capsule
+    product_form = Column(String, nullable=False)  
     is_active = Column(Boolean, nullable=False, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 

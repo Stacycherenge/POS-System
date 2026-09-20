@@ -1,3 +1,4 @@
+
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
@@ -7,7 +8,7 @@ class CategoryBase(BaseModel):
     is_active: bool = True
 
 class CategoryCreate(CategoryBase):
-    category_id: str
+    category_id: int 
 
 class CategoryUpdate(BaseModel):
     category_name: str | None = None
@@ -16,5 +17,5 @@ class CategoryUpdate(BaseModel):
 
 class CategoryRead(CategoryBase):
     model_config = ConfigDict(from_attributes=True)
-    category_id: str
+    category_id: int  
     created_at: datetime
